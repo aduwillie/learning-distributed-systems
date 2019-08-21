@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: node-exporter-service
+  namespace: monitoring
+spec:
+  selector:
+    app: node-exporter
+  type: ClusterIP
+  ports:
+  - port:  9100
+    targetPort:  9100

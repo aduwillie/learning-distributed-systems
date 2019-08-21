@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: prometheus-service
+  namespace: monitoring
+  annotations:
+    prometheus.io/scrape: 'true'
+    prometheus.io/path: /metrics
+    prometheus.io/port: '9090'
+spec:
+  selector:
+    app: prometheus
+  type: ClusterIP
+  ports:
+  - port:  9090
+    targetPort:  9090

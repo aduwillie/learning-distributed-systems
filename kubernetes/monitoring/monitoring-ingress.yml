@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: monitoring-ingress-service
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    prometheus.io/scrape: 'true'
+    prometheus.io/path: /metrics
+    prometheus.io/port: '9090'
+spec:
+  rules:
+  - host: prometheus.localhost # host file on server should be modified
+    http:
+      paths:
+      - backend:
+        serviceName: prometheus-service
+        servicePort: 9090
+  - host: grafana.localhost # host file on server should be modified
+    http:
+      paths:
+      - backend:
+        serviceName: grafana-service
+        servicePort: 3000
+

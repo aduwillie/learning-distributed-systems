@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: topz
+  labels:
+    app: topz
+spec:
+  shareProcessNamespace: true # this is true by default
+  containers:
+  - name: nginx
+    image: nginx
+  - name: topz
+    image: brendanburns/topz:db0fa58
+    env:
+    - name: ADDRESS
+      value: "--addr=0.0.0.0:8080"
+    command: ["/server"]
+    args: ["$(ADDRESS)"]
+    restartPolicy: OnFailure

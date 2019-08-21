@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: cadvisor-deployment
+  namespace: monitoring
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cadvisor
+    spec:
+      containers:
+      - name: cadvisor
+        image: google/cadvisor:latest
+        ports:
+        - containerPort: 8080

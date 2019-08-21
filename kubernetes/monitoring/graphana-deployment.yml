@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: grafana-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      containers:
+      - name: grafana
+        image: grafana/grafana:latest
+        volumeMounts:
+        - name: grafana-data
+          mountDir: /var/lib/grafana
+      env:
+      - name: GF_AUTH_BASIC_ENABLED
+        value: "false"
+      - name: GF_AUTH_ANONYMOUS_ENABLED
+        value: "true"
+      - name: GF_AUTH_ANONYMOUS_ORG_ROLE
+        value: "Admin"
+      volumes:
+      - name: grafana-data
+        emptyDir: {}

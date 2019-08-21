@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alert-manager-config
+  labels:
+    app: prometheus-server-config
+    namespace: monitoring
+data:
+  config.yml: |-
+    route:
+      receiver: "slack"
+    receivers:
+    - name: "slack"
+      slack_configs:
+      - send_resolved: true
+        text: "{{ .CommonAnnotations.description }}"
+        username: "Prometheus"
+        channel: "#alert"
+        api_url: "https://hooks.slack.com/services/<webhook-id>"

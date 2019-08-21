@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: alert-manager-deployment
+  namespace: monitoring
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: alert-manager
+    spec:
+      containers:
+      - name: alert-manager
+        image: prom/alertmanager:latest
+        args:
+        - "--config.file=/etc/alertmanager/config.yml"
+        - "--storage.tsdb.path=/alertmanager/"
+        ports:
+        - containerPort: 9090
+        volumeMounts:
+        - name: alert-manager-config
+          mountPath: /etc/alertmanager
+        - name: alert-manager-data
+          mountPath: /alertmanager/
+      volumes:
+      - name: alert-manager-data
+        emptyDir: {}
+      - name: alert-manager-config
+        configMap:
+          name: alert-manager-config
+          defaultMode: 420
